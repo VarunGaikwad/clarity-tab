@@ -1,0 +1,17 @@
+{
+  "manifest_version": 2,
+  "name": "Clarity Tab",
+  "version": "1.1",
+  "description": "A chrome extension for Clarity.ai",
+  "author": "Varun Gaikwad",
+  "permissions": ["tabs", "storage", "activeTab", "geolocation"],
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  },
+  "optional_permissions": ["<all_urls>"],
+  "icons": {
+    "16": "icon-48.png",
+    "32": "icon-48.png",
+    "48": "icon-48.png"
+  }
+}
