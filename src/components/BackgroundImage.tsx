@@ -3,24 +3,17 @@ import unsplashImage from "../data/unsplashImage.json";
 import { useEffect, useState } from "react";
 
 const complementaryColor = (hex: string) => {
-  // Ensure the hex color starts with '#'
   if (hex[0] === "#") {
     hex = hex.slice(1);
   }
 
-  let r = parseInt(hex.substring(0, 2), 16);
-  let g = parseInt(hex.substring(2, 4), 16);
-  let b = parseInt(hex.substring(4, 6), 16);
+  const r = parseInt(hex.substring(0, 2), 16);
+  const g = parseInt(hex.substring(2, 4), 16);
+  const b = parseInt(hex.substring(4, 6), 16);
 
-  r = 255 - r;
-  g = 255 - g;
-  b = 255 - b;
+  const brightness = 0.299 * r + 0.587 * g + 0.114 * b;
 
-  const complementHex =
-    "#" +
-    ((1 << 24) | (r << 16) | (g << 8) | b).toString(16).slice(1).toUpperCase();
-
-  return complementHex;
+  return brightness < 127.5 ? "#000000" : "#FFFFFF";
 };
 
 export default function BackgroundImage({
@@ -73,7 +66,7 @@ export default function BackgroundImage({
       <div
         className="absolute top-0 -z-10 left-0 w-full h-full bg-black"
         style={{
-          opacity: 0.175,
+          opacity: 0.5,
         }}
       />
       <div
