@@ -1,33 +1,68 @@
 [
   {
-    "japanese": "こんにちは",
-    "romanji": "Konnichiwa",
-    "translation": "Hello"
+    "japanese": "どうやって",
+    "romanji": "dou yatte",
+    "translation": "How"
   },
   {
-    "japanese": "ありがとう",
-    "romanji": "Arigatou",
-    "translation": "Thank you"
+    "japanese": "いつ",
+    "romanji": "itsu",
+    "translation": "When"
   },
   {
-    "japanese": "お疲れ様です",
-    "romanji": "Otsukaresama desu",
-    "translation": "Good job / Thank you for your hard work"
+    "japanese": "何",
+    "romanji": "nani",
+    "translation": "What"
   },
   {
-    "japanese": "すみません",
-    "romanji": "Sumimasen",
-    "translation": "Excuse me / I'm sorry"
+    "japanese": "どれ",
+    "romanji": "dore",
+    "translation": "Which (general)"
   },
   {
-    "japanese": "いただきます",
-    "romanji": "Itadakimasu",
-    "translation": "Let's eat / Thank you for the meal"
+    "japanese": "どの",
+    "romanji": "dono",
+    "translation": "Which (specific, followed by a noun)"
   },
   {
-    "japanese": "ごちそうさまでした",
-    "romanji": "Gochisousama deshita",
-    "translation": "Thank you for the meal (after eating)"
+    "japanese": "どちら",
+    "romanji": "dochira",
+    "translation": "Which (polite) / Which way"
+  },
+  {
+    "japanese": "なぜ",
+    "romanji": "naze",
+    "translation": "Why (formal)"
+  },
+  {
+    "japanese": "どうして",
+    "romanji": "doushite",
+    "translation": "Why (casual)"
+  },
+  {
+    "japanese": "誰",
+    "romanji": "dare",
+    "translation": "Who"
+  },
+  {
+    "japanese": "どこ",
+    "romanji": "doko",
+    "translation": "Where"
+  },
+  {
+    "japanese": "いくら",
+    "romanji": "ikura",
+    "translation": "How much (price)"
+  },
+  {
+    "japanese": "いくつ",
+    "romanji": "ikutsu",
+    "translation": "How many (general)"
+  },
+  {
+    "japanese": "経験",
+    "romanji": "keiken",
+    "translation": "Experience"
   },
   {
     "japanese": "おはようございます",
@@ -35,233 +70,98 @@
     "translation": "Good morning"
   },
   {
-    "japanese": "さようなら",
-    "romanji": "Sayounara",
-    "translation": "Goodbye"
+    "japanese": "こんにちは",
+    "romanji": "Konnichiwa",
+    "translation": "Hello"
   },
   {
-    "japanese": "だってばよ",
-    "romanji": "Dattebayo",
-    "translation": "You know! (Naruto's signature phrase)"
+    "japanese": "こんばんは",
+    "romanji": "Konbanwa",
+    "translation": "Good evening"
   },
   {
-    "japanese": "バカ",
-    "romanji": "Baka",
-    "translation": "Idiot / Fool (often used in anime)"
+    "japanese": "お疲れ様です",
+    "romanji": "Otsukaresama desu",
+    "translation": "Thank you for your hard work"
   },
   {
-    "japanese": "うるさい",
-    "romanji": "Urusai",
-    "translation": "Noisy / Shut up"
+    "japanese": "よろしくお願いします",
+    "romanji": "Yoroshiku onegaishimasu",
+    "translation": "Please take care of this / Nice to meet you"
   },
   {
-    "japanese": "すごい",
-    "romanji": "Sugoi",
-    "translation": "Amazing / Incredible"
+    "japanese": "すみません",
+    "romanji": "Sumimasen",
+    "translation": "Excuse me / Sorry"
   },
   {
-    "japanese": "ありがとうごじます",
+    "japanese": "申し訳ありません",
+    "romanji": "Moushiwake arimasen",
+    "translation": "I sincerely apologize"
+  },
+  {
+    "japanese": "ありがとうございます",
     "romanji": "Arigatou gozaimasu",
-    "translation": "Thank you (polite)"
+    "translation": "Thank you"
   },
   {
-    "japanese": "お前",
-    "romanji": "Omae",
-    "translation": "You (informal, often used in anime by male characters)"
+    "japanese": "承知しました",
+    "romanji": "Shouchi shimashita",
+    "translation": "Understood / Noted"
   },
   {
-    "japanese": "なんでだよ",
-    "romanji": "Nande da yo",
-    "translation": "Why the heck?"
+    "japanese": "確認します",
+    "romanji": "Kakunin shimasu",
+    "translation": "I will check / confirm"
   },
   {
-    "japanese": "だめ",
-    "romanji": "Dame",
-    "translation": "No good / Not allowed"
+    "japanese": "締め切り",
+    "romanji": "Shimekiri",
+    "translation": "Deadline"
   },
   {
-    "japanese": "うける",
-    "romanji": "Ukeru",
-    "translation": "Funny / Hilarious"
+    "japanese": "会議",
+    "romanji": "Kaigi",
+    "translation": "Meeting"
   },
   {
-    "japanese": "みんな",
-    "romanji": "Minna",
-    "translation": "Everyone"
+    "japanese": "報告",
+    "romanji": "Houkoku",
+    "translation": "Report"
   },
   {
-    "japanese": "なんだと",
-    "romanji": "Nanda to",
-    "translation": "What the heck?"
+    "japanese": "連絡",
+    "romanji": "Renraku",
+    "translation": "Contact / Communication"
   },
   {
-    "japanese": "おおきい",
-    "romanji": "Ookii",
-    "translation": "Big"
+    "japanese": "相談",
+    "romanji": "Soudan",
+    "translation": "Consultation / Discussion"
   },
   {
-    "japanese": "ちいさい",
-    "romanji": "Chiisai",
-    "translation": "Small"
+    "japanese": "進捗",
+    "romanji": "Shinchoku",
+    "translation": "Progress"
   },
   {
-    "japanese": "はい",
-    "romanji": "Hai",
-    "translation": "Yes"
+    "japanese": "問題",
+    "romanji": "Mondai",
+    "translation": "Problem / Issue"
   },
   {
-    "japanese": "いいえ",
-    "romanji": "Iie",
-    "translation": "No"
+    "japanese": "改善",
+    "romanji": "Kaizen",
+    "translation": "Improvement"
   },
   {
-    "japanese": "あたまがいい",
-    "romanji": "Atama ga ii",
-    "translation": "Smart / Intelligent"
+    "japanese": "担当",
+    "romanji": "Tantou",
+    "translation": "Person in charge / Responsibility"
   },
   {
-    "japanese": "かわいい",
-    "romanji": "Kawaii",
-    "translation": "Cute"
-  },
-  {
-    "japanese": "お金",
-    "romanji": "Okane",
-    "translation": "Money"
-  },
-  {
-    "japanese": "何時ですか",
-    "romanji": "Nanji desu ka",
-    "translation": "What time is it?"
-  },
-  {
-    "japanese": "どこですか",
-    "romanji": "Doko desu ka",
-    "translation": "Where is it?"
-  },
-  {
-    "japanese": "ごめんなさい",
-    "romanji": "Gomen nasai",
-    "translation": "I'm sorry"
-  },
-  {
-    "japanese": "大丈夫",
-    "romanji": "Daijoubu",
-    "translation": "It's okay / I'm fine"
-  },
-  {
-    "japanese": "はい、どうぞ",
-    "romanji": "Hai, douzo",
-    "translation": "Here you go / Please (offering something)"
-  },
-  {
-    "japanese": "すごい",
-    "romanji": "Sugoi",
-    "translation": "Amazing / Awesome"
-  },
-  {
-    "japanese": "しね",
-    "romanji": "Shine",
-    "translation": "Die (harsh insult, often used in anime)"
-  },
-  {
-    "japanese": "助けて",
-    "romanji": "Tasukete",
-    "translation": "Help me"
-  },
-  {
-    "japanese": "わかる",
-    "romanji": "Wakaru",
-    "translation": "I understand"
-  },
-  {
-    "japanese": "わかりません",
-    "romanji": "Wakarimasen",
-    "translation": "I don't understand"
-  },
-  {
-    "japanese": "おめでとう",
-    "romanji": "Omedetou",
-    "translation": "Congratulations"
-  },
-  {
-    "japanese": "気をつけて",
-    "romanji": "Ki wo tsukete",
-    "translation": "Take care"
-  },
-  {
-    "japanese": "いいね",
-    "romanji": "Ii ne",
-    "translation": "Good / Nice"
-  },
-  {
-    "japanese": "だよね",
-    "romanji": "Da yo ne",
-    "translation": "Right? (confirming)"
-  },
-  {
-    "japanese": "とても",
-    "romanji": "Totemo",
-    "translation": "Very"
-  },
-  {
-    "japanese": "無理",
-    "romanji": "Muri",
-    "translation": "Impossible / No way"
-  },
-  {
-    "japanese": "何",
-    "romanji": "Nani",
-    "translation": "What"
-  },
-  {
-    "japanese": "そう",
-    "romanji": "Sou",
-    "translation": "That's right"
-  },
-  {
-    "japanese": "本当に",
-    "romanji": "Hontou ni",
-    "translation": "Really"
-  },
-  {
-    "japanese": "いくらですか",
-    "romanji": "Ikura desu ka",
-    "translation": "How much is it?"
-  },
-  {
-    "japanese": "もう",
-    "romanji": "Mou",
-    "translation": "Already / Enough"
-  },
-  {
-    "japanese": "やった",
-    "romanji": "Yatta",
-    "translation": "I did it!"
-  },
-  {
-    "japanese": "はじめまして",
-    "romanji": "Hajimemashite",
-    "translation": "Nice to meet you"
-  },
-  {
-    "japanese": "いいえ、違います",
-    "romanji": "Iie, chigaimasu",
-    "translation": "No, that's not right"
-  },
-  {
-    "japanese": "どこか",
-    "romanji": "Doko ka",
-    "translation": "Somewhere"
-  },
-  {
-    "japanese": "やめて",
-    "romanji": "Yamete",
-    "translation": "Stop it!"
-  },
-  {
-    "japanese": "みせて",
-    "romanji": "Misete",
-    "translation": "Show me"
+    "japanese": "納期",
+    "romanji": "Nouki",
+    "translation": "Delivery date / Due date"
   }
 ]

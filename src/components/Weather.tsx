@@ -70,7 +70,7 @@ export default function Weather() {
           className="size-16"
         />
         <div>
-          <p>{Math.floor(main.temp)}°C</p>
+          <p>{Math.ceil(main.temp)}°C</p>
           <p className="capitalize">{weather[0].description || "N/A"}</p>
         </div>
       </div>

@@ -38,7 +38,7 @@ export default function BackgroundImage({
       <div
         className="absolute top-0 -z-10 left-0 w-full h-full bg-black"
         style={{
-          opacity: 0.5,
+          opacity: 0.25,
         }}
       />
       <div

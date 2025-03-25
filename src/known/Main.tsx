@@ -6,8 +6,8 @@ export default function Main() {
   const { userData } = useUserData(),
     [currentTime, setCurrentTime] = useState(new Date()),
     [word] = useState(words[Math.floor(Math.random() * words.length)]),
-    startTime = userData?.startTime || "09:30",
-    endTime = userData?.endTime || "18:30",
+    startTime = userData?.startTime || "08:30",
+    endTime = userData?.endTime || "17:30",
     [startHour, startMinute] = startTime.split(":").map(Number),
     [endHour, endMinute] = endTime.split(":").map(Number),
     totalStartMinutes = startHour * 60 + startMinute,
@@ -31,11 +31,17 @@ export default function Main() {
 
   let greeting = "";
 
-  if (currentHour === 13 || (currentHour === 14 && currentMinute === 0)) {
+  if (
+    (currentHour === 11 && currentMinute >= 30) ||
+    (currentHour === 12 && currentMinute < 30)
+  ) {
     greeting = "お昼ご飯の時間です！🍱";
   } else if (currentHour === 17 && currentMinute >= 0 && currentMinute < 30) {
     greeting = "おやつの時間です！🍪";
-  } else if (currentHour >= 5 && currentHour < 12) {
+  } else if (
+    (currentHour >= 5 && currentHour < 11) ||
+    (currentHour === 11 && currentMinute < 30)
+  ) {
     greeting = "おはようございます！🌅";
   } else if (currentHour >= 12 && currentHour < 18) {
     greeting = "こんにちは！☀️";
