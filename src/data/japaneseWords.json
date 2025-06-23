@@ -1,167 +1,155 @@
 [
+  { "japanese": "はい", "romanji": "hai", "translation": "Yes" },
+  { "japanese": "いいえ", "romanji": "iie", "translation": "No" },
   {
-    "japanese": "どうやって",
-    "romanji": "dou yatte",
-    "translation": "How"
+    "japanese": "ありがとう",
+    "romanji": "arigatou",
+    "translation": "Thank you"
+  },
+  { "japanese": "こんにちは", "romanji": "konnichiwa", "translation": "Hello" },
+  {
+    "japanese": "さようなら",
+    "romanji": "sayounara",
+    "translation": "Goodbye"
   },
   {
-    "japanese": "いつ",
-    "romanji": "itsu",
-    "translation": "When"
-  },
-  {
-    "japanese": "何",
-    "romanji": "nani",
-    "translation": "What"
-  },
-  {
-    "japanese": "どれ",
-    "romanji": "dore",
-    "translation": "Which (general)"
-  },
-  {
-    "japanese": "どの",
-    "romanji": "dono",
-    "translation": "Which (specific, followed by a noun)"
-  },
-  {
-    "japanese": "どちら",
-    "romanji": "dochira",
-    "translation": "Which (polite) / Which way"
-  },
-  {
-    "japanese": "なぜ",
-    "romanji": "naze",
-    "translation": "Why (formal)"
-  },
-  {
-    "japanese": "どうして",
-    "romanji": "doushite",
-    "translation": "Why (casual)"
-  },
-  {
-    "japanese": "誰",
-    "romanji": "dare",
-    "translation": "Who"
-  },
-  {
-    "japanese": "どこ",
-    "romanji": "doko",
-    "translation": "Where"
-  },
-  {
-    "japanese": "いくら",
-    "romanji": "ikura",
-    "translation": "How much (price)"
-  },
-  {
-    "japanese": "いくつ",
-    "romanji": "ikutsu",
-    "translation": "How many (general)"
-  },
-  {
-    "japanese": "経験",
-    "romanji": "keiken",
-    "translation": "Experience"
-  },
-  {
-    "japanese": "おはようございます",
-    "romanji": "Ohayou gozaimasu",
+    "japanese": "おはよう",
+    "romanji": "ohayou",
     "translation": "Good morning"
   },
   {
-    "japanese": "こんにちは",
-    "romanji": "Konnichiwa",
-    "translation": "Hello"
-  },
-  {
     "japanese": "こんばんは",
-    "romanji": "Konbanwa",
+    "romanji": "konbanwa",
     "translation": "Good evening"
   },
   {
-    "japanese": "お疲れ様です",
-    "romanji": "Otsukaresama desu",
-    "translation": "Thank you for your hard work"
-  },
-  {
-    "japanese": "よろしくお願いします",
-    "romanji": "Yoroshiku onegaishimasu",
-    "translation": "Please take care of this / Nice to meet you"
-  },
-  {
     "japanese": "すみません",
-    "romanji": "Sumimasen",
+    "romanji": "sumimasen",
     "translation": "Excuse me / Sorry"
   },
   {
-    "japanese": "申し訳ありません",
-    "romanji": "Moushiwake arimasen",
-    "translation": "I sincerely apologize"
+    "japanese": "ごめんなさい",
+    "romanji": "gomennasai",
+    "translation": "I'm sorry"
   },
   {
-    "japanese": "ありがとうございます",
-    "romanji": "Arigatou gozaimasu",
-    "translation": "Thank you"
+    "japanese": "お願いします",
+    "romanji": "onegaishimasu",
+    "translation": "Please"
   },
   {
-    "japanese": "承知しました",
-    "romanji": "Shouchi shimashita",
-    "translation": "Understood / Noted"
+    "japanese": "どうぞ",
+    "romanji": "douzo",
+    "translation": "Go ahead / Here you are"
   },
   {
-    "japanese": "確認します",
-    "romanji": "Kakunin shimasu",
-    "translation": "I will check / confirm"
+    "japanese": "どうも",
+    "romanji": "doumo",
+    "translation": "Thanks / Hello / Very"
   },
+  { "japanese": "わかる", "romanji": "wakaru", "translation": "To understand" },
+  { "japanese": "知る", "romanji": "shiru", "translation": "To know" },
+  { "japanese": "話す", "romanji": "hanasu", "translation": "To speak" },
   {
-    "japanese": "締め切り",
-    "romanji": "Shimekiri",
-    "translation": "Deadline"
+    "japanese": "聞く",
+    "romanji": "kiku",
+    "translation": "To listen / To ask"
   },
+  { "japanese": "見る", "romanji": "miru", "translation": "To see" },
+  { "japanese": "行く", "romanji": "iku", "translation": "To go" },
+  { "japanese": "来る", "romanji": "kuru", "translation": "To come" },
+  { "japanese": "する", "romanji": "suru", "translation": "To do" },
+  { "japanese": "食べる", "romanji": "taberu", "translation": "To eat" },
+  { "japanese": "飲む", "romanji": "nomu", "translation": "To drink" },
+  { "japanese": "買う", "romanji": "kau", "translation": "To buy" },
+  { "japanese": "売る", "romanji": "uru", "translation": "To sell" },
   {
-    "japanese": "会議",
-    "romanji": "Kaigi",
-    "translation": "Meeting"
+    "japanese": "ある",
+    "romanji": "aru",
+    "translation": "To exist (inanimate)"
   },
+  { "japanese": "いる", "romanji": "iru", "translation": "To exist (animate)" },
+  { "japanese": "寝る", "romanji": "neru", "translation": "To sleep" },
+  { "japanese": "起きる", "romanji": "okiru", "translation": "To wake up" },
+  { "japanese": "働く", "romanji": "hataraku", "translation": "To work" },
   {
-    "japanese": "報告",
-    "romanji": "Houkoku",
-    "translation": "Report"
+    "japanese": "勉強する",
+    "romanji": "benkyou suru",
+    "translation": "To study"
   },
+  { "japanese": "読む", "romanji": "yomu", "translation": "To read" },
+  { "japanese": "書く", "romanji": "kaku", "translation": "To write" },
+  { "japanese": "開ける", "romanji": "akeru", "translation": "To open" },
+  { "japanese": "閉める", "romanji": "shimeru", "translation": "To close" },
+  { "japanese": "高い", "romanji": "takai", "translation": "Expensive / High" },
+  { "japanese": "安い", "romanji": "yasui", "translation": "Cheap / Low" },
+  { "japanese": "大きい", "romanji": "ookii", "translation": "Big" },
+  { "japanese": "小さい", "romanji": "chiisai", "translation": "Small" },
+  { "japanese": "新しい", "romanji": "atarashii", "translation": "New" },
+  { "japanese": "古い", "romanji": "furui", "translation": "Old" },
+  { "japanese": "いい", "romanji": "ii", "translation": "Good" },
+  { "japanese": "悪い", "romanji": "warui", "translation": "Bad" },
+  { "japanese": "暑い", "romanji": "atsui", "translation": "Hot (weather)" },
+  { "japanese": "寒い", "romanji": "samui", "translation": "Cold (weather)" },
   {
-    "japanese": "連絡",
-    "romanji": "Renraku",
-    "translation": "Contact / Communication"
+    "japanese": "面白い",
+    "romanji": "omoshiroi",
+    "translation": "Interesting"
   },
+  { "japanese": "難しい", "romanji": "muzukashii", "translation": "Difficult" },
+  { "japanese": "簡単", "romanji": "kantan", "translation": "Simple / Easy" },
+  { "japanese": "どうやって", "romanji": "dou yatte", "translation": "How" },
+  { "japanese": "なぜ", "romanji": "naze", "translation": "Why" },
+  { "japanese": "いつ", "romanji": "itsu", "translation": "When" },
+  { "japanese": "どこ", "romanji": "doko", "translation": "Where" },
+  { "japanese": "何", "romanji": "nani", "translation": "What" },
+  { "japanese": "誰", "romanji": "dare", "translation": "Who" },
+  { "japanese": "これ", "romanji": "kore", "translation": "This" },
+  { "japanese": "それ", "romanji": "sore", "translation": "That (near you)" },
+  { "japanese": "あれ", "romanji": "are", "translation": "That (over there)" },
+  { "japanese": "どれ", "romanji": "dore", "translation": "Which" },
+  { "japanese": "ここ", "romanji": "koko", "translation": "Here" },
+  { "japanese": "そこ", "romanji": "soko", "translation": "There (near you)" },
+  { "japanese": "あそこ", "romanji": "asoko", "translation": "Over there" },
+  { "japanese": "どこ", "romanji": "doko", "translation": "Where" },
+  { "japanese": "とても", "romanji": "totemo", "translation": "Very" },
+  { "japanese": "少し", "romanji": "sukoshi", "translation": "A little" },
   {
-    "japanese": "相談",
-    "romanji": "Soudan",
-    "translation": "Consultation / Discussion"
+    "japanese": "たくさん",
+    "romanji": "takusan",
+    "translation": "A lot / Many"
   },
+  { "japanese": "全部", "romanji": "zenbu", "translation": "All" },
+  { "japanese": "一緒に", "romanji": "issho ni", "translation": "Together" },
   {
-    "japanese": "進捗",
-    "romanji": "Shinchoku",
-    "translation": "Progress"
+    "japanese": "別々に",
+    "romanji": "betsu betsu ni",
+    "translation": "Separately"
   },
-  {
-    "japanese": "問題",
-    "romanji": "Mondai",
-    "translation": "Problem / Issue"
-  },
-  {
-    "japanese": "改善",
-    "romanji": "Kaizen",
-    "translation": "Improvement"
-  },
-  {
-    "japanese": "担当",
-    "romanji": "Tantou",
-    "translation": "Person in charge / Responsibility"
-  },
-  {
-    "japanese": "納期",
-    "romanji": "Nouki",
-    "translation": "Delivery date / Due date"
-  }
+  { "japanese": "時間", "romanji": "jikan", "translation": "Time" },
+  { "japanese": "今", "romanji": "ima", "translation": "Now" },
+  { "japanese": "今日", "romanji": "kyou", "translation": "Today" },
+  { "japanese": "明日", "romanji": "ashita", "translation": "Tomorrow" },
+  { "japanese": "昨日", "romanji": "kinou", "translation": "Yesterday" },
+  { "japanese": "名前", "romanji": "namae", "translation": "Name" },
+  { "japanese": "友達", "romanji": "tomodachi", "translation": "Friend" },
+  { "japanese": "家族", "romanji": "kazoku", "translation": "Family" },
+  { "japanese": "人", "romanji": "hito", "translation": "Person" },
+  { "japanese": "日本", "romanji": "nihon", "translation": "Japan" },
+  { "japanese": "学校", "romanji": "gakkou", "translation": "School" },
+  { "japanese": "先生", "romanji": "sensei", "translation": "Teacher" },
+  { "japanese": "学生", "romanji": "gakusei", "translation": "Student" },
+  { "japanese": "会社", "romanji": "kaisha", "translation": "Company" },
+  { "japanese": "駅", "romanji": "eki", "translation": "Station" },
+  { "japanese": "病院", "romanji": "byouin", "translation": "Hospital" },
+  { "japanese": "店", "romanji": "mise", "translation": "Shop / Store" },
+  { "japanese": "家", "romanji": "ie", "translation": "House / Home" },
+  { "japanese": "部屋", "romanji": "heya", "translation": "Room" },
+  { "japanese": "電話", "romanji": "denwa", "translation": "Telephone" },
+  { "japanese": "車", "romanji": "kuruma", "translation": "Car" },
+  { "japanese": "自転車", "romanji": "jitensha", "translation": "Bicycle" },
+  { "japanese": "電車", "romanji": "densha", "translation": "Train" },
+  { "japanese": "飛行機", "romanji": "hikouki", "translation": "Airplane" },
+  { "japanese": "道", "romanji": "michi", "translation": "Road / Way" },
+  { "japanese": "国", "romanji": "kuni", "translation": "Country" }
 ]

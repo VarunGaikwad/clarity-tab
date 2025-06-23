@@ -4,9 +4,8 @@ import WorldClock from "../components/WorldClock";
 
 export default function Header() {
   return (
-    <header className="flex justify-between p-2">
+    <header className="flex justify-end p-2">
       <ImportantLinks />
-      <div />
       <div className="flex gap-4">
         <WorldClock />
         <Weather />

@@ -108,8 +108,8 @@ interface UnsplashImageType {
       photos: string | null;
       likes: string | null;
       portfolio: string | null;
-      following: string | null;
-      followers: string | null;
+      following?: string | null; // 👈 optional
+      followers?: string | null; // 👈 optional
     };
     profile_image: {
       small: string | null;
