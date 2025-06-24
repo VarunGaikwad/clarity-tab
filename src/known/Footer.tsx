@@ -1,3 +1,4 @@
+import { NextBusCard } from "../components/NextBusCard";
 import quotes from "../data/quotes.json";
 import { useUserData } from "../hooks/useUserData";
 import { useMemo } from "react";
@@ -13,6 +14,7 @@ export default function Footer() {
 
   return (
     <footer className="flex justify-between items-center text-xs m-1 p-2 px-5">
+      <NextBusCard />
       <div>
         Background Photo by{" "}
         <a
