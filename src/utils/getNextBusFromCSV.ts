@@ -6,33 +6,29 @@ export interface BusEntry {
 
 export const parseSpaceSeparatedCSVWithMine = (
   csvText: string,
-  offsetMinutes = 10
+  gracePeriodMinutes = 2 // <== NEW
 ): BusEntry[] => {
   const now = new Date();
-  now.setMinutes(now.getMinutes() + offsetMinutes);
-
+  const graceCutoff = new Date(now.getTime() - gracePeriodMinutes * 60 * 1000);
+  // const futureCutoff = new Date(now.getTime() + offsetMinutes * 60 * 1000);
   const lines = csvText.trim().split("\n");
   if (lines.length < 2) return [];
 
-  // Parse Kashinomori
-  const kashiLine = lines[0].trim().split(/\s+/);
-  const mineLine = lines[1].trim().split(/\s+/);
-
-  const kashiTimes = kashiLine.slice(1);
-  const mineTimes = mineLine.slice(1);
+  const kashiTimes = lines[0].trim().split(/\s+/).slice(1);
+  const mineTimes = lines[1].trim().split(/\s+/).slice(1);
 
   const today = new Date();
   const results: BusEntry[] = [];
 
   for (let i = 0; i < kashiTimes.length; i++) {
     const timeStr = kashiTimes[i];
-    if (!/^\d{1,2}:\d{2}$/.test(timeStr)) continue; // skip "…"
+    if (!/^\d{1,2}:\d{2}$/.test(timeStr)) continue;
 
     const [h, m] = timeStr.split(":").map(Number);
     const dep = new Date(today);
     dep.setHours(h, m, 0, 0);
 
-    if (dep < now) continue;
+    if (dep < graceCutoff) continue; // missed completely
 
     let mineArrival: Date | undefined;
     const mineTimeStr = mineTimes[i];

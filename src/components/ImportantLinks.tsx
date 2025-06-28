@@ -3,6 +3,7 @@ import { FaTrash } from "react-icons/fa";
 import { IoMdAdd } from "react-icons/io";
 import Dialog from "./Dialog";
 import { useUserData } from "../hooks/useUserData";
+import CachedFavicon from "./CachedFavicon";
 
 const isValidUrl = (url: string): boolean => {
   try {
@@ -14,19 +15,30 @@ const isValidUrl = (url: string): boolean => {
 };
 
 export default function ImportantLinks() {
+  const { userData, setUserData } = useUserData();
+
+  const [links, setLinks] = useState(userData?.links || []);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [inputValue, setInputValue] = useState({ title: "", url: "" });
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const { userData, setUserData } = useUserData();
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [inputValue, setInputValue] = useState({ title: "", url: "" });
-  const [links, setLinks] = useState(userData?.links || []);
-
-  /**
-   * Newly added Start
-   */
-
+  // Cache favicons and keyboard shortcuts
   useEffect(() => {
+    const cacheFavicons = async () => {
+      try {
+        const cache = await caches.open("favicons");
+        const urls = links.map(
+          ({ url }) => `/favicone/${new URL(url).hostname}?s=256`
+        );
+        await cache.addAll(urls);
+      } catch (e) {
+        // Silently ignore caching errors
+      }
+    };
+
+    cacheFavicons();
+
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.ctrlKey || e.metaKey) && e.key === "f") {
         e.preventDefault();
@@ -38,7 +50,6 @@ export default function ImportantLinks() {
           input?.focus();
         }, 10);
       }
-
       if (e.key === "Escape") {
         setSearchOpen(false);
         setSearchTerm("");
@@ -47,22 +58,21 @@ export default function ImportantLinks() {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, []);
+  }, [links]);
 
-  /**
-   * Newly added End
-   */
-
+  // Reset dialog inputs when dialog opens/closes
   useEffect(() => {
     setInputValue({ title: "", url: "" });
   }, [isDialogOpen]);
 
+  // Sync links to userData
   useEffect(() => {
     if (setUserData) {
       setUserData((prev) => ({ ...prev, links }));
     }
   }, [links, setUserData]);
 
+  // Delete link handler
   const handleDelete = (indexToDelete: number) => {
     if (confirm("Are you sure you want to delete this link?")) {
       setLinks((prevLinks) =>
@@ -71,12 +81,12 @@ export default function ImportantLinks() {
     }
   };
 
-  const handleAdd = (event: React.FormEvent) => {
-    event.preventDefault();
-
+  // Add link handler
+  const handleAdd = (e: React.FormEvent) => {
+    e.preventDefault();
     const { title, url } = inputValue;
 
-    if (title.length <= 3) {
+    if (title.trim().length <= 3) {
       alert("Title must be more than 3 characters.");
       return;
     }
@@ -86,15 +96,30 @@ export default function ImportantLinks() {
       return;
     }
 
-    setLinks((prevLinks) => [...prevLinks, inputValue]);
+    setLinks((prev) => [...prev, { title: title.trim(), url: url.trim() }]);
     setIsDialogOpen(false);
   };
 
+  // Input change handler generator
   const handleInputChange =
     (field: keyof typeof inputValue) =>
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      setInputValue((prev) => ({ ...prev, [field]: event.target.value }));
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setInputValue((prev) => ({ ...prev, [field]: e.target.value }));
     };
+
+  // Filter and focus search results on Enter key
+  const handleSearchKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      const matchIndex = links.findIndex((link) =>
+        link.title.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+
+      if (matchIndex !== -1) {
+        const element = document.getElementById(`link-${matchIndex}`);
+        element?.focus();
+      }
+    }
+  };
 
   return (
     <div className="absolute top-0 left-0 p-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-2 w-4/6">
@@ -103,82 +128,65 @@ export default function ImportantLinks() {
         isOpen={isDialogOpen}
         onClose={() => setIsDialogOpen(false)}
       >
-        <form onSubmit={handleAdd} className="flex gap-2 flex-col">
+        <form onSubmit={handleAdd} className="flex flex-col gap-2">
           <input
             type="text"
-            value={inputValue.title}
             placeholder="Title"
+            value={inputValue.title}
             onChange={handleInputChange("title")}
-            className="w-full bg-white bg-opacity-5 p-2 outline-none rounded-md"
+            className="w-full bg-white bg-opacity-5 p-2 rounded-md outline-none"
           />
           <input
             type="text"
-            value={inputValue.url}
             placeholder="URL"
+            value={inputValue.url}
             onChange={handleInputChange("url")}
-            className="w-full bg-white bg-opacity-5 p-2 outline-none rounded-md"
+            className="w-full bg-white bg-opacity-5 p-2 rounded-md outline-none"
           />
           <input type="submit" className="hidden" />
         </form>
       </Dialog>
+
       {searchOpen && (
         <input
           id="custom-search-input"
+          type="text"
+          placeholder="Search links..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              const matchIndex = links.findIndex((link) =>
-                link.title.toLowerCase().includes(searchTerm.toLowerCase())
-              );
-
-              if (matchIndex !== -1) {
-                const element = document.getElementById(
-                  `link-${matchIndex}`
-                ) as HTMLDivElement | null;
-                if (element) {
-                  element.focus();
-                }
-              }
-            }
-          }}
-          placeholder="Search links..."
-          className="fixed bottom-10 left-1/2 transform -translate-x-1/2 px-3 py-2 z-50 text-white rounded shadow w-1/3 bg-black bg-opacity-30 p-2 outline-none rounded-md"
+          onKeyDown={handleSearchKeyDown}
+          className="fixed bottom-10 left-1/2 z-50 w-1/3 -translate-x-1/2 rounded-md bg-black bg-opacity-30 px-3 py-2 text-white shadow outline-none"
         />
       )}
+
       {links
         .sort((a, b) => a.url.length - b.url.length)
         .map((link, idx) => (
           <div
             key={idx}
+            id={`link-${idx}`}
             tabIndex={0}
             onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                window.open(links[idx].url, "_self");
-              }
+              if (e.key === "Enter") window.open(links[idx].url, "_self");
             }}
-            id={`link-${idx}`}
-            className="relative text-xs flex items-center gap-1 bg-black px-2 py-1 rounded-lg transform duration-500 ease-in-out bg-opacity-20 hover:bg-opacity-50 hover:scale-105 focus:bg-opacity-50 focus:scale-105 group"
+            className="group relative flex items-center gap-2 rounded-lg bg-black bg-opacity-20 px-2 py-1 text-xs text-white transition duration-500 ease-in-out hover:bg-opacity-50 hover:scale-105 focus:bg-opacity-50 focus:scale-105"
           >
             <a href={link.url} className="flex items-center gap-2">
-              <img
-                width={32}
-                src={`https://www.google.com/s2/favicons?sz=32&domain=${link.url}`}
-                alt={`${link.title} icon`}
-              />
+              <CachedFavicon url={link.url} title={link.title} />
               {link.title}
             </a>
             <FaTrash
               size={12}
-              className="absolute top-1 right-1 text-red-500 opacity-0 cursor-pointer hover:text-red-700 group-hover:opacity-100"
+              className="absolute top-1 right-1 cursor-pointer text-red-500 opacity-0 transition group-hover:opacity-100 hover:text-red-700"
               onClick={() => handleDelete(idx)}
             />
           </div>
         ))}
+
       {links.length < 30 && (
         <div
           onClick={() => setIsDialogOpen(true)}
-          className="cursor-pointer relative text-xs flex items-center gap-2 bg-black p-2 rounded-lg transform duration-500 ease-in-out bg-opacity-10 hover:bg-opacity-50 hover:scale-105 focus:bg-opacity-50 focus:scale-105 group"
+          className="group relative flex cursor-pointer items-center gap-2 rounded-lg bg-black bg-opacity-10 p-2 text-xs text-white transition duration-500 ease-in-out hover:bg-opacity-50 hover:scale-105 focus:bg-opacity-50 focus:scale-105"
         >
           <IoMdAdd size={28} />
           Add More

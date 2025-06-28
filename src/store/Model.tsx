@@ -11,6 +11,7 @@ export default function Model({ children }: { children: React.ReactNode }) {
       : {
           displayName: "",
           links: [],
+          isBusSchedule: false,
           isAuth: false,
           unsplashImage:
             unsplashImage[Math.floor(Math.random() * unsplashImage.length)],

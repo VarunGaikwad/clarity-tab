@@ -57,6 +57,7 @@ export interface UserDataType {
   lastDate: string;
   timeZones: TimeZoneType[];
   unsplashImage: UnsplashImageType;
+  isBusSchedule: boolean;
 }
 
 export interface UserContextType {
