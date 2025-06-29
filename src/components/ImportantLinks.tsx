@@ -3,7 +3,6 @@ import { FaTrash } from "react-icons/fa";
 import { IoMdAdd } from "react-icons/io";
 import Dialog from "./Dialog";
 import { useUserData } from "../hooks/useUserData";
-import CachedFavicon from "./CachedFavicon";
 
 const isValidUrl = (url: string): boolean => {
   try {
@@ -20,29 +19,12 @@ export default function ImportantLinks() {
   const [links, setLinks] = useState(userData?.links || []);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [inputValue, setInputValue] = useState({ title: "", url: "" });
-  const [searchOpen, setSearchOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Cache favicons and keyboard shortcuts
   useEffect(() => {
-    const cacheFavicons = async () => {
-      try {
-        const cache = await caches.open("favicons");
-        const urls = links.map(
-          ({ url }) => `/favicone/${new URL(url).hostname}?s=256`
-        );
-        await cache.addAll(urls);
-      } catch (e) {
-        // Silently ignore caching errors
-      }
-    };
-
-    cacheFavicons();
-
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.ctrlKey || e.metaKey) && e.key === "f") {
         e.preventDefault();
-        setSearchOpen(true);
         setTimeout(() => {
           const input = document.getElementById(
             "custom-search-input"
@@ -51,28 +33,24 @@ export default function ImportantLinks() {
         }, 10);
       }
       if (e.key === "Escape") {
-        setSearchOpen(false);
         setSearchTerm("");
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [links]);
+  }, []);
 
-  // Reset dialog inputs when dialog opens/closes
   useEffect(() => {
     setInputValue({ title: "", url: "" });
   }, [isDialogOpen]);
 
-  // Sync links to userData
   useEffect(() => {
     if (setUserData) {
       setUserData((prev) => ({ ...prev, links }));
     }
   }, [links, setUserData]);
 
-  // Delete link handler
   const handleDelete = (indexToDelete: number) => {
     if (confirm("Are you sure you want to delete this link?")) {
       setLinks((prevLinks) =>
@@ -81,7 +59,6 @@ export default function ImportantLinks() {
     }
   };
 
-  // Add link handler
   const handleAdd = (e: React.FormEvent) => {
     e.preventDefault();
     const { title, url } = inputValue;
@@ -100,14 +77,12 @@ export default function ImportantLinks() {
     setIsDialogOpen(false);
   };
 
-  // Input change handler generator
   const handleInputChange =
     (field: keyof typeof inputValue) =>
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setInputValue((prev) => ({ ...prev, [field]: e.target.value }));
     };
 
-  // Filter and focus search results on Enter key
   const handleSearchKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       const matchIndex = links.findIndex((link) =>
@@ -147,7 +122,7 @@ export default function ImportantLinks() {
         </form>
       </Dialog>
 
-      {searchOpen && (
+      {searchTerm && (
         <input
           id="custom-search-input"
           type="text"
@@ -167,13 +142,39 @@ export default function ImportantLinks() {
             id={`link-${idx}`}
             tabIndex={0}
             onKeyDown={(e) => {
-              if (e.key === "Enter") window.open(links[idx].url, "_self");
+              if (e.key === "Enter") window.open(link.url, "_self");
             }}
             className="group relative flex items-center gap-2 rounded-lg bg-black bg-opacity-20 px-2 py-1 text-xs text-white transition duration-500 ease-in-out hover:bg-opacity-50 hover:scale-105 focus:bg-opacity-50 focus:scale-105"
           >
             <a href={link.url} className="flex items-center gap-2">
-              <CachedFavicon url={link.url} title={link.title} />
-              {link.title}
+              <div className="relative flex items-center gap-2">
+                <div className="relative size-8">
+                  <img
+                    src={`https://favvyvision.onrender.com/favicon?domain=${
+                      new URL(link.url).hostname
+                    }`}
+                    alt={`${link.title} favicon`}
+                    className="size-8 rounded-full object-cover"
+                    onError={(e) => {
+                      const target = e.currentTarget;
+                      target.style.display = "none";
+                      const fallback = target.nextElementSibling as HTMLElement;
+                      if (fallback) fallback.style.display = "flex";
+                    }}
+                  />
+                  <div
+                    style={{ display: "none" }}
+                    className="absolute inset-0 size-8 items-center justify-center rounded-full bg-gray-700 text-xs font-semibold text-white"
+                  >
+                    {link.title
+                      .split(" ")
+                      .slice(0, 2)
+                      .map((word) => word[0]?.toUpperCase())
+                      .join("")}
+                  </div>
+                </div>
+                {link.title}
+              </div>
             </a>
             <FaTrash
               size={12}
