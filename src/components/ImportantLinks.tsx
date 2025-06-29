@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { FaTrash } from "react-icons/fa";
 import { IoMdAdd } from "react-icons/io";
 import Dialog from "./Dialog";
 import { useUserData } from "../hooks/useUserData";
+import { FaTrash, FaEdit } from "react-icons/fa";
 
 const isValidUrl = (url: string): boolean => {
   try {
@@ -15,24 +15,34 @@ const isValidUrl = (url: string): boolean => {
 
 export default function ImportantLinks() {
   const { userData, setUserData } = useUserData();
-
+  const [editIndex, setEditIndex] = useState<number | null>(null);
   const [links, setLinks] = useState(userData?.links || []);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [inputValue, setInputValue] = useState({ title: "", url: "" });
   const [searchTerm, setSearchTerm] = useState("");
+  const [isSearchVisible, setIsSearchVisible] = useState(false);
 
+  useEffect(() => {
+    if (isSearchVisible) {
+      const timeout = setTimeout(() => {
+        const input = document.getElementById(
+          "custom-search-input"
+        ) as HTMLInputElement;
+        input?.focus();
+      }, 50);
+      return () => clearTimeout(timeout);
+    }
+  }, [isSearchVisible]);
+
+  // Keyboard shortcuts for search and closing
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.ctrlKey || e.metaKey) && e.key === "f") {
         e.preventDefault();
-        setTimeout(() => {
-          const input = document.getElementById(
-            "custom-search-input"
-          ) as HTMLInputElement;
-          input?.focus();
-        }, 10);
+        setIsSearchVisible(true);
       }
       if (e.key === "Escape") {
+        setIsSearchVisible(false);
         setSearchTerm("");
       }
     };
@@ -42,7 +52,10 @@ export default function ImportantLinks() {
   }, []);
 
   useEffect(() => {
-    setInputValue({ title: "", url: "" });
+    if (!isDialogOpen) {
+      setInputValue({ title: "", url: "" });
+      setEditIndex(null);
+    }
   }, [isDialogOpen]);
 
   useEffect(() => {
@@ -57,24 +70,6 @@ export default function ImportantLinks() {
         prevLinks.filter((_, index) => index !== indexToDelete)
       );
     }
-  };
-
-  const handleAdd = (e: React.FormEvent) => {
-    e.preventDefault();
-    const { title, url } = inputValue;
-
-    if (title.trim().length <= 3) {
-      alert("Title must be more than 3 characters.");
-      return;
-    }
-
-    if (!isValidUrl(url)) {
-      alert("Invalid URL.");
-      return;
-    }
-
-    setLinks((prev) => [...prev, { title: title.trim(), url: url.trim() }]);
-    setIsDialogOpen(false);
   };
 
   const handleInputChange =
@@ -96,14 +91,49 @@ export default function ImportantLinks() {
     }
   };
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const { title, url } = inputValue;
+
+    if (title.trim().length <= 3) {
+      alert("Title must be more than 3 characters.");
+      return;
+    }
+
+    if (!isValidUrl(url)) {
+      alert("Invalid URL.");
+      return;
+    }
+
+    if (editIndex !== null) {
+      // Edit mode
+      setLinks((prev) =>
+        prev.map((link, idx) =>
+          idx === editIndex ? { title: title.trim(), url: url.trim() } : link
+        )
+      );
+    } else {
+      // Add mode
+      setLinks((prev) => [...prev, { title: title.trim(), url: url.trim() }]);
+    }
+
+    setIsDialogOpen(false);
+  };
+
+  useEffect(() => {
+    if (isDialogOpen) return; // Don’t reset while opening
+    setInputValue({ title: "", url: "" });
+    setEditIndex(null);
+  }, [isDialogOpen]);
+
   return (
     <div className="absolute top-0 left-0 p-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-2 w-4/6">
       <Dialog
-        title="Add Link"
+        title={editIndex !== null ? "Edit Link" : "Add Link"}
         isOpen={isDialogOpen}
         onClose={() => setIsDialogOpen(false)}
       >
-        <form onSubmit={handleAdd} className="flex flex-col gap-2">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-2">
           <input
             type="text"
             placeholder="Title"
@@ -122,7 +152,7 @@ export default function ImportantLinks() {
         </form>
       </Dialog>
 
-      {searchTerm && (
+      {isSearchVisible && (
         <input
           id="custom-search-input"
           type="text"
@@ -151,7 +181,7 @@ export default function ImportantLinks() {
                 <div className="relative size-8">
                   <img
                     src={`https://favvyvision.onrender.com/favicon?domain=${
-                      new URL(link.url).hostname
+                      new URL(link.url).origin
                     }`}
                     alt={`${link.title} favicon`}
                     className="size-8 rounded-full object-cover"
@@ -180,6 +210,15 @@ export default function ImportantLinks() {
               size={12}
               className="absolute top-1 right-1 cursor-pointer text-red-500 opacity-0 transition group-hover:opacity-100 hover:text-red-700"
               onClick={() => handleDelete(idx)}
+            />
+            <FaEdit
+              size={12}
+              className="absolute top-1 right-5 cursor-pointer text-blue-400 opacity-0 transition group-hover:opacity-100 hover:text-blue-600"
+              onClick={() => {
+                setEditIndex(idx);
+                setInputValue(link);
+                setIsDialogOpen(true);
+              }}
             />
           </div>
         ))}

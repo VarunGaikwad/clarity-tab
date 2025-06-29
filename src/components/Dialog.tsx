@@ -28,7 +28,7 @@ const Dialog: React.FC<DialogProps> = ({
         top: "50%",
         transform: "translate(0%, -50%)",
       }}
-      className={`bg-black text-white bg-opacity-50 rounded-lg shadow-lg ${className}`}
+      className={`bg-black text-white bg-opacity-95 rounded-lg shadow-lg ${className}`}
     >
       <div className="flex justify-between p-4 pb-0">
         <span>{title}</span>
