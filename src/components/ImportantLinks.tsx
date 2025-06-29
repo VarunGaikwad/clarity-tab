@@ -20,19 +20,29 @@ export default function ImportantLinks() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [inputValue, setInputValue] = useState({ title: "", url: "" });
   const [searchTerm, setSearchTerm] = useState("");
+  const [isSearchVisible, setIsSearchVisible] = useState(false);
 
+  useEffect(() => {
+    if (isSearchVisible) {
+      const timeout = setTimeout(() => {
+        const input = document.getElementById(
+          "custom-search-input"
+        ) as HTMLInputElement;
+        input?.focus();
+      }, 50);
+      return () => clearTimeout(timeout);
+    }
+  }, [isSearchVisible]);
+
+  // Keyboard shortcuts for search and closing
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.ctrlKey || e.metaKey) && e.key === "f") {
         e.preventDefault();
-        setTimeout(() => {
-          const input = document.getElementById(
-            "custom-search-input"
-          ) as HTMLInputElement;
-          input?.focus();
-        }, 10);
+        setIsSearchVisible(true);
       }
       if (e.key === "Escape") {
+        setIsSearchVisible(false);
         setSearchTerm("");
       }
     };
@@ -122,7 +132,7 @@ export default function ImportantLinks() {
         </form>
       </Dialog>
 
-      {searchTerm && (
+      {isSearchVisible && (
         <input
           id="custom-search-input"
           type="text"
@@ -151,7 +161,7 @@ export default function ImportantLinks() {
                 <div className="relative size-8">
                   <img
                     src={`https://favvyvision.onrender.com/favicon?domain=${
-                      new URL(link.url).hostname
+                      new URL(link.url).origin
                     }`}
                     alt={`${link.title} favicon`}
                     className="size-8 rounded-full object-cover"
