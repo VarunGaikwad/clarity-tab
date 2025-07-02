@@ -19,7 +19,7 @@ export const NextBusCard = () => {
     );
     setLeaveTime(
       nextCatchable
-        ? new Date(nextCatchable.departure.getTime() - 10 * 60 * 1000)
+        ? new Date(nextCatchable.departure.getTime() - 15 * 60 * 1000)
         : null
     );
   };
