@@ -58,25 +58,36 @@ export default function Weather() {
     wind = { speed: 0 },
   } = weatherInfo;
 
+  const weatherItem = weather[0] ?? {
+    icon: "01n",
+    description: "Clear Sky",
+  };
+
   return (
-    <div className="text-right font-semibold text-sm">
-      <p>
-        {name}, {sys.country}
-      </p>
-      <div className="flex items-center space-x-2 justify-center">
-        <img
-          src={`https://openweathermap.org/img/wn/${weather[0].icon}@2x.png`}
-          alt={weather[0].description}
-          className="size-16"
-        />
-        <div>
-          <p>{Math.ceil(main.temp)}°C</p>
-          <p className="capitalize">{weather[0].description || "N/A"}</p>
-        </div>
+    <div className="flex flex-col items-center text-white text-sm font-medium gap-2 p-2 rounded-md w-full max-w-xs">
+      <div className="text-center">
+        <p className="text-base font-bold">
+          {name}, {sys.country}
+        </p>
+        <p className="text-xs text-gray-300">
+          {weatherItem.description.charAt(0).toUpperCase() +
+            weatherItem.description.slice(1)}
+        </p>
       </div>
-      <p>
-        Humidity: {main.humidity || "--"}% | Wind: {wind.speed || "--"} m/s
-      </p>
+
+      <div className="flex items-center gap-3">
+        <img
+          src={`https://openweathermap.org/img/wn/${weatherItem.icon}@2x.png`}
+          alt={weatherItem.description}
+          className="w-14 h-14"
+        />
+        <p className="text-3xl font-bold">{Math.ceil(main.temp)}°C</p>
+      </div>
+
+      <div className="flex justify-between text-xs text-gray-100 w-full px-2">
+        <p>💧 {main.humidity}%</p>
+        <p>💨 {wind.speed} m/s</p>
+      </div>
     </div>
   );
 }

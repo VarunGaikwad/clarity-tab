@@ -3,38 +3,45 @@ import { MdAddCircle, MdDelete } from "react-icons/md";
 import Dialog from "./Dialog";
 import { TimeZoneType } from "../interface/common";
 import { useUserData } from "../hooks/useUserData";
+import { FaEdit } from "react-icons/fa";
 
-const formatTime = (date: Date, offset: number) => {
-  const utc = date.getTime() + date.getTimezoneOffset() * 60000;
-  const localTime = new Date(utc + offset * 3600000);
-  const hours = localTime.getHours();
-  const minutes = localTime.getMinutes().toString().padStart(2, "0");
-  const isPM = hours >= 12;
-  const displayHours = hours % 12 || 12;
+const getTimeInZone = (date: Date, timeZone: string) => {
+  const formatter = new Intl.DateTimeFormat("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+    timeZone,
+  });
+
+  const parts = formatter.formatToParts(date);
+  const hour = parts.find((p) => p.type === "hour")?.value ?? "00";
+  const minute = parts.find((p) => p.type === "minute")?.value ?? "00";
+  const period = parts.find((p) => p.type === "dayPeriod")?.value ?? "";
+
   return {
-    time: `${displayHours}:${minutes}`,
-    period: isPM ? "pm" : "am",
+    time: `${hour}:${minute}`,
+    period: period.toLowerCase(),
   };
 };
 
-const getOffsetDifference = (locationOffset: number) => {
-  const localOffset = -new Date().getTimezoneOffset() / 60;
-  const difference = locationOffset - localOffset;
-  if (difference > 0) {
-    return `+${difference} hours`;
-  } else if (difference < 0) {
-    return `${difference} hours`;
-  } else {
-    return `Same time`;
-  }
-};
+const TIMEZONE_LIST = (typeof Intl.supportedValuesOf === "function"
+  ? Intl.supportedValuesOf("timeZone")
+  : null) || [
+  "UTC",
+  "Asia/Tokyo",
+  "Europe/London",
+  "America/New_York",
+  "Asia/Kolkata",
+  "Australia/Sydney",
+];
 
 export default function WorldClock() {
   const { userData, setUserData } = useUserData();
+  const [editIndex, setEditIndex] = useState<number | null>(null);
   const [time, setTime] = useState(new Date());
   const [inputValue, setInputValue] = useState({
     title: "",
-    offset: 0,
+    zone: "UTC",
   });
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [timeZones, setTimeZones] = useState<TimeZoneType[]>(
@@ -42,9 +49,43 @@ export default function WorldClock() {
   );
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setTime(new Date());
-    }, 1000);
+    const userTimeZone =
+      Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";
+    setInputValue({ title: "", zone: userTimeZone });
+    setEditIndex(null);
+  }, [isDialogOpen]);
+
+  const onTimeZoneSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    const { title, zone } = inputValue;
+
+    if (title.length <= 2) {
+      alert("Title must be more than 2 characters.");
+      return;
+    }
+
+    const isDuplicate = timeZones.some(
+      (tz, i) => i !== editIndex && tz.title === title && tz.zone === zone
+    );
+
+    if (isDuplicate) {
+      alert("Time zone already exists.");
+      return;
+    }
+
+    if (editIndex !== null) {
+      const updated = [...timeZones];
+      updated[editIndex] = { title, zone };
+      setTimeZones(updated);
+    } else {
+      setTimeZones((prev) => [...prev, { title, zone }]);
+    }
+
+    setIsDialogOpen(false);
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => setTime(new Date()), 1000);
     return () => clearInterval(interval);
   }, []);
 
@@ -54,65 +95,29 @@ export default function WorldClock() {
   }, [timeZones, setUserData]);
 
   useEffect(() => {
-    setInputValue({
-      title: "",
-      offset: 0,
-    });
+    setInputValue({ title: "", zone: "UTC" });
   }, [isDialogOpen]);
 
   const handleInputChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+    (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
       const { name, value } = e.target;
-      setInputValue((prev) => ({
-        ...prev,
-        [name]: name === "offset" ? Number(value) : value,
-      }));
+      setInputValue((prev) => ({ ...prev, [name]: value }));
     },
     []
   );
 
-  const onTimeZoneSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    if (inputValue.title.length <= 2) {
-      alert("Title must be more than 2 characters.");
-      return;
-    }
-
-    if (
-      inputValue.offset < -14 ||
-      inputValue.offset > 14 ||
-      inputValue.offset % 0.5 !== 0
-    ) {
-      alert("Offset must be between -14 and 14 and in increments of 0.5.");
-      return;
-    }
-
-    if (
-      timeZones.some(
-        (zone) =>
-          zone.title === inputValue.title && zone.offset === inputValue.offset
-      )
-    ) {
-      alert("Time zone already exists.");
-      return;
-    }
-
-    setTimeZones((prev) => [...prev, inputValue]);
-    setIsDialogOpen(false);
-  };
-
-  const onHandleDelete = (title: string, offset: number) => {
+  const onHandleDelete = (title: string, zone: string) => {
     const shouldDelete = confirm(
       "Are you sure you want to delete this time zone?"
     );
     if (!shouldDelete) return;
     setTimeZones((prev) =>
-      prev.filter((zone) => zone.title !== title && zone.offset !== offset)
+      prev.filter((tz) => !(tz.title === title && tz.zone === zone))
     );
   };
 
   return (
-    <div className="hidden lg:flex gap-4 justify-center items-center h-fit">
+    <div className="hidden lg:flex gap-4 justify-center items-center h-fit py-2">
       <Dialog
         title="Add Time Zone"
         isOpen={isDialogOpen}
@@ -128,46 +133,71 @@ export default function WorldClock() {
           />
           <input
             className="w-full bg-white bg-opacity-5 p-2 outline-none rounded-md"
-            placeholder="TimeOffset"
-            type="number"
-            max={14}
-            min={-14}
-            step={0.5}
-            name="offset"
-            value={inputValue.offset}
+            list="timezones"
+            name="zone"
+            value={inputValue.zone}
             onChange={handleInputChange}
           />
+          <datalist id="timezones">
+            {TIMEZONE_LIST.map((tz) => (
+              <option key={tz} value={tz}>
+                {tz.replace(/_/g, " ")}
+              </option>
+            ))}
+          </datalist>
           <input type="submit" className="hidden" />
         </form>
       </Dialog>
+
       {timeZones.length < 5 && (
         <span
           onClick={() => setIsDialogOpen(true)}
-          className="flex gap-1 items-center text-xs cursor-pointer"
+          className="flex gap-1 items-center text-xs w-32 cursor-pointer"
         >
           <MdAddCircle className="text-3xl" />
           Add Time Zone
         </span>
       )}
-      {timeZones.map(({ title, offset }) => {
-        const { time: formattedTime, period } = formatTime(time, offset);
-        const offsetDifference = getOffsetDifference(offset);
-        return (
-          <div key={title} className="text-right cursor-pointer relative group">
-            <p className="text-lg font-semibold space-x-1">
-              <span className="tracking-widest">{formattedTime}</span>
-              <span className="text-base">{period}</span>
-            </p>
-            <p className="text-xs">{title}</p>
-            <p className="text-xs text-left">{offsetDifference}</p>
-            <MdDelete
-              onClick={() => onHandleDelete(title, offset)}
-              className="absolute -top-2 right-0 text-red-500 opacity-0 group-hover:opacity-100 cursor-pointer transition-opacity duration-200"
-              size={12}
-            />
-          </div>
-        );
-      })}
+
+      <div className="flex items-center gap-4">
+        {timeZones.map(({ title, zone }, index) => {
+          const { time: formattedTime, period } = getTimeInZone(time, zone);
+          return (
+            <div
+              key={`${title}-${zone}`}
+              className="relative flex items-center"
+            >
+              <div
+                className="text-right cursor-pointer group pr-4"
+                title={zone}
+              >
+                <p className="text-lg font-semibold space-x-1">
+                  <span className="tracking-widest">{formattedTime}</span>
+                  <span className="text-base lowercase">{period}</span>
+                </p>
+                <p className="text-xs">{title}</p>
+                <MdDelete
+                  onClick={() => onHandleDelete(title, zone)}
+                  className="absolute -top-2 right-0 text-red-500 opacity-0 group-hover:opacity-100 cursor-pointer transition-opacity duration-200"
+                  size={12}
+                />
+                <FaEdit
+                  onClick={() => {
+                    setInputValue({ title, zone });
+                    setEditIndex(index);
+                    setIsDialogOpen(true);
+                  }}
+                  className="absolute -top-2 right-5 text-blue-400 opacity-0 group-hover:opacity-100 cursor-pointer text-xs"
+                  size={12}
+                />
+              </div>
+              {index < timeZones.length - 1 && (
+                <div className="h-8 w-px bg-white/20 mx-2" />
+              )}
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }

@@ -65,11 +65,6 @@ export interface UserContextType {
   setUserData?: React.Dispatch<React.SetStateAction<UserDataType>>;
 }
 
-export interface TimeZoneType {
-  title: string;
-  offset: number;
-}
-
 interface UnsplashImageType {
   width: number;
   height: number;
@@ -133,4 +128,9 @@ interface UnsplashImageType {
       paypal_email: string | null;
     };
   };
+}
+
+export interface TimeZoneType {
+  title: string;
+  zone: string;
 }
