@@ -41,19 +41,12 @@ export default function WorldClock() {
   const [time, setTime] = useState(new Date());
   const [inputValue, setInputValue] = useState({
     title: "",
-    zone: "UTC",
+    zone: Intl.DateTimeFormat().resolvedOptions().timeZone,
   });
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [timeZones, setTimeZones] = useState<TimeZoneType[]>(
     userData?.timeZones || []
   );
-
-  useEffect(() => {
-    const userTimeZone =
-      Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";
-    setInputValue({ title: "", zone: userTimeZone });
-    setEditIndex(null);
-  }, [isDialogOpen]);
 
   const onTimeZoneSubmit = (event: React.FormEvent) => {
     event.preventDefault();
@@ -95,7 +88,13 @@ export default function WorldClock() {
   }, [timeZones, setUserData]);
 
   useEffect(() => {
-    setInputValue({ title: "", zone: "UTC" });
+    if (!isDialogOpen) {
+      setInputValue({
+        title: "",
+        zone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      });
+      setEditIndex(null);
+    }
   }, [isDialogOpen]);
 
   const handleInputChange = useCallback(
@@ -183,6 +182,7 @@ export default function WorldClock() {
                 />
                 <FaEdit
                   onClick={() => {
+                    debugger;
                     setInputValue({ title, zone });
                     setEditIndex(index);
                     setIsDialogOpen(true);
