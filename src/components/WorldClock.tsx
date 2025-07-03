@@ -182,7 +182,6 @@ export default function WorldClock() {
                 />
                 <FaEdit
                   onClick={() => {
-                    debugger;
                     setInputValue({ title, zone });
                     setEditIndex(index);
                     setIsDialogOpen(true);
