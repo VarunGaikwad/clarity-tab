@@ -174,7 +174,7 @@ export default function WorldClock() {
                   <span className="tracking-widest">{formattedTime}</span>
                   <span className="text-base lowercase">{period}</span>
                 </p>
-                <p className="text-xs">{title}</p>
+                <IconWithText title={title} />
                 <MdDelete
                   onClick={() => onHandleDelete(title, zone)}
                   className="absolute -top-2 right-0 text-red-500 opacity-0 group-hover:opacity-100 cursor-pointer transition-opacity duration-200"
@@ -198,5 +198,19 @@ export default function WorldClock() {
         })}
       </div>
     </div>
+  );
+}
+function IconWithText({ title }: { title: string }) {
+  const match = title.match(
+    /^(\p{Emoji_Presentation}|\p{Extended_Pictographic})+/u
+  );
+  const icon = match ? match[0] : "";
+  const text = title.slice(icon.length);
+
+  return (
+    <p className="text-xs">
+      {icon && <span className="text-lg mr-1">{icon}</span>}
+      {text}
+    </p>
   );
 }
