@@ -127,7 +127,7 @@ export default function ImportantLinks() {
   }, [isDialogOpen]);
 
   return (
-    <div className="absolute top-0 left-0 p-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-2 w-4/6">
+    <div className="absolute top-0 left-0 p-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 w-6/12">
       <Dialog
         title={editIndex !== null ? "Edit Link" : "Add Link"}
         isOpen={isDialogOpen}
@@ -176,36 +176,40 @@ export default function ImportantLinks() {
             }}
             className="group relative flex items-center gap-2 rounded-lg bg-black bg-opacity-20 px-2 py-1 text-xs text-white transition duration-500 ease-in-out hover:bg-opacity-50 hover:scale-105 focus:bg-opacity-50 focus:scale-105"
           >
-            <a href={link.url} className="flex items-center gap-2">
-              <div className="relative flex items-center gap-2">
-                <div className="relative size-8">
-                  <img
-                    src={`https://favvyvision.onrender.com/favicon?domain=${
-                      new URL(link.url).origin
-                    }`}
-                    alt={`${link.title} favicon`}
-                    className="size-8 rounded-full object-cover"
-                    onError={(e) => {
-                      const target = e.currentTarget;
-                      target.style.display = "none";
-                      const fallback = target.nextElementSibling as HTMLElement;
-                      if (fallback) fallback.style.display = "flex";
-                    }}
-                  />
-                  <div
-                    style={{ display: "none" }}
-                    className="absolute inset-0 size-8 items-center justify-center rounded-full bg-gray-700 text-xs font-semibold text-white"
-                  >
-                    {link.title
-                      .split(" ")
-                      .slice(0, 2)
-                      .map((word) => word[0]?.toUpperCase())
-                      .join("")}
-                  </div>
+            <a
+              href={link.url}
+              className="flex items-center gap-2 w-full overflow-hidden"
+            >
+              <div className="flex-shrink-0 relative size-7">
+                <img
+                  src={`https://favvyvision.onrender.com/favicon?domain=${
+                    new URL(link.url).origin
+                  }`}
+                  alt={`${link.title} favicon`}
+                  className="size-7 rounded-full object-cover"
+                  onError={(e) => {
+                    const target = e.currentTarget;
+                    target.style.display = "none";
+                    const fallback = target.nextElementSibling as HTMLElement;
+                    if (fallback) fallback.style.display = "flex";
+                  }}
+                />
+                <div
+                  style={{ display: "none" }}
+                  className="absolute inset-0 size-7 items-center justify-center rounded-full bg-gray-700 text-xs font-semibold text-white"
+                >
+                  {link.title
+                    .split(" ")
+                    .slice(0, 2)
+                    .map((word) => word[0]?.toUpperCase())
+                    .join("")}
                 </div>
-                {link.title}
               </div>
+              <span className="truncate w-full" title={link.title}>
+                {link.title}
+              </span>
             </a>
+
             <FaTrash
               size={12}
               className="absolute top-1 right-1 cursor-pointer text-red-500 opacity-0 transition group-hover:opacity-100 hover:text-red-700"
@@ -228,7 +232,7 @@ export default function ImportantLinks() {
           onClick={() => setIsDialogOpen(true)}
           className="group relative flex cursor-pointer items-center gap-2 rounded-lg bg-black bg-opacity-10 p-2 text-xs text-white transition duration-500 ease-in-out hover:bg-opacity-50 hover:scale-105 focus:bg-opacity-50 focus:scale-105"
         >
-          <IoMdAdd size={28} />
+          <IoMdAdd size={24} />
           Add More
         </div>
       )}
